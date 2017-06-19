@@ -1,14 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import createBrowserHistory from 'history/createBrowserHistory'
-import {Router, Route, Switch} from 'react-router'
+import {Route, Switch} from 'react-router'
+import {BrowserRouter} from 'react-router-dom'
 
 import logo from './logo.svg';
 import Article from './components/Article'
 import ArticleGrid from './components/ArticleGrid.jsx'
 import './index.css';
-
-const history = createBrowserHistory()
 
 const App = () => {
     return (
@@ -26,11 +24,11 @@ const App = () => {
 }
 
 ReactDOM.render(
-    <Router history={history}>
+    <BrowserRouter>
         <div>
             <App />
         </div>
-    </Router>,
+    </BrowserRouter>,
     document.getElementById('root')
 );
 
