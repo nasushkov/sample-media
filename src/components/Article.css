@@ -1,0 +1,26 @@
+.article {
+    background-color: #bdbdbd;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 20px;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    width: 70%;
+}
+
+.title {
+    font-size: 24px;
+    text-align: center;
+}
+
+.author {
+    margin-top: 12px;
+    font-size: 18px;
+    font-style: italic;
+}
+
+.text {
+    margin-top: 12px;
+    word-wrap: break-word;
+    font-size: 16px;
+}
