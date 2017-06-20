@@ -11,7 +11,7 @@ import './index.css';
 const App = () => {
     return (
         <div className="App">
-            <Header />
+            <Header path='*' />
             <Switch>
                 <Route exact path="/" component={ArticleGrid}/>
                 <Route path="/article/:id" component={Article}/>
