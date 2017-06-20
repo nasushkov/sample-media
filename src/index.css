@@ -8,4 +8,6 @@ body {
   text-align: center;
 }
 
-
+.nav-link {
+  padding-right: 8px;
+}
