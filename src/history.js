@@ -5,7 +5,7 @@ import {stringify, parse} from 'qs';
 const history = createBrowserHistory();
 
 export default qhistory(
-    history,
-    stringify,
-    parse
+  history,
+  stringify,
+  parse
 );
