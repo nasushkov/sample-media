@@ -1,8 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
-import data from '../articles.json';
-
 const style = {
   'article': {
     'backgroundColor': '#bdbdbd',
@@ -29,8 +27,16 @@ const style = {
   }
 };
 
-export default ({match}) => {
-  const {title, author, text} = data.articles.find(({id}) => id == match.params.id);
+export default ({match, articles}) => {
+  if(!articles || !articles.length){
+    return (
+      <div style={style.article}>
+        Загрузка
+      </div>
+    )
+  }
+  
+  const {title, author, text} = articles.find(({id}) => id == match.params.id);
 
   return (
     <div style={style.article}>

@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {withRouter} from 'react-router';
 
-import data from '../articles.json';
-
 const style = {
   app_header: {
     'backgroundColor': '#222',
@@ -18,16 +16,17 @@ class Header extends React.Component {
   static propTypes = {
     match: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
-    history: PropTypes.object.isRequired
+    history: PropTypes.object.isRequired,
+    articles: PropTypes.array
   }
 
   render() {
-    const {match, location, history} = this.props;
+    const {match, location, history, articles} = this.props;
     let title = 'Добро пожаловать в Журнал "Мурзилка"';
 
     const artIndex = location.pathname.indexOf('/article/');
 
-    if (artIndex > -1) {
+    if (artIndex > -1 && articles && articles.length) {
       const queryInd = location.pathname.indexOf('?');
 
       let artId;
@@ -38,7 +37,7 @@ class Header extends React.Component {
         artId = location.pathname.substr(artIndex + 9);
       }
 
-      title = `Автор статьи: ${data.articles.find(({id}) => id == artId).author}`;
+      title = `Автор статьи: ${articles.find(({id}) => id == artId).author}`;
     }
 
     return (

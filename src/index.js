@@ -17,10 +17,10 @@ const style = {
   }
 };
 
-const App = () => {
+const App = ({articles}) => {
   return (
     <div style={style.app}>
-      <Header path='*'/>
+      <Header articles={articles}/>
       <nav>
         <Link
           style={style.nav_link}
@@ -29,30 +29,66 @@ const App = () => {
         <Link
           style={style.nav_link}
           to={{
-                     pathname: '/',
-                     search: '?theme=economy'
-                   }}
+                 pathname: '/',
+                 search: '?theme=economy'
+              }}
         >Экономика</Link>
         <Link
           style={style.nav_link}
           to={{
-                      pathname: '/',
-                      search: '?theme=entertainment'
-                    }}
+                pathname: '/',
+                search: '?theme=entertainment'
+             }}
         >Развлечения</Link>
       </nav>
       <Switch>
-        <Route exact path="/" component={ArticleGrid}/>
-        <Route path="/article/:id" component={Article}/>
+        <Route exact path="/" render={(props) => (
+          <ArticleGrid {...props} articles={articles}/>
+        )}/>
+        <Route path="/article/:id" render={(props) => (
+          <Article {...props} articles={articles}/>
+        )}/>
       </Switch>
     </div>
-  )
+  );
 };
+
+class DataFetcher extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      articles: []
+    };
+  }
+
+  componentWillMount() {
+    const reqHeaders = new Headers({
+      'Content-Type': 'application/json'
+    })
+
+    fetch('/api/articles', {
+      method: 'GET',
+      headers: reqHeaders,
+    }).then(response => {
+      return response.json();
+    }).then((result) => {
+      this.setState(result);
+    })
+  }
+
+  render() {
+    const {articles} = this.state;
+
+    return (
+      <App articles={articles}/>
+    )
+  }
+}
 
 ReactDOM.render(
   <Router history={history}>
     <div>
-      <App />
+      <DataFetcher />
     </div>
   </Router>,
   document.getElementById('root')

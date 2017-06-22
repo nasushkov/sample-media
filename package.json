@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "express": "^4.15.3",
     "history": "^4.6.2",
     "prop-types": "^15.5.10",
     "qhistory": "^1.0.0",
@@ -12,11 +13,14 @@
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1"
   },
+  "proxy": "http://localhost:8080",
   "devDependencies": {
     "react-scripts": "1.0.7"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "npm run start:prod | npm run start:dev",
+    "start:prod": "node server",
+    "start:dev": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"

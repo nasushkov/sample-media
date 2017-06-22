@@ -1,8 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
-import data from '../articles.json';
-
 const style = {
   'article_grid': {
     'width': '70%',
@@ -38,17 +36,25 @@ const GridItem = ({
   </div>
 );
 
-export default ({location}) => {
-  let articles = data.articles;
+export default ({location, articles}) => {
+  if(!articles || !articles.length){
+    return (
+      <div style={style.article_grid}>
+        Идет загрузка
+      </div>
+    )
+  }
+  
+  let selectedArticles = articles
 
   if (location.query && location.query.theme) {
-    articles = articles.filter(article => article.theme === location.query.theme);
+    selectedArticles = articles.filter(article => article.theme === location.query.theme);
   }
 
   return (
     <div style={style.article_grid}>
       {
-        articles.map(article => (
+        selectedArticles.map(article => (
           <GridItem key={article.id} article={article}/>
         ))
       }
