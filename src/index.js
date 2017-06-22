@@ -53,37 +53,47 @@ const App = ({articles}) => {
   );
 };
 
-class DataFetcher extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      articles: []
-    };
-  }
+const withFetcher = (WrappedComponent, {url, collName}) => {
+  return class extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        [collName]: []
+      };
+    }
 
-  componentWillMount() {
-    const reqHeaders = new Headers({
-      'Content-Type': 'application/json'
-    })
+    componentWillMount() {
+      const reqHeaders = new Headers({
+        'Content-Type': 'application/json'
+      })
 
-    fetch('/api/articles', {
-      method: 'GET',
-      headers: reqHeaders,
-    }).then(response => {
-      return response.json();
-    }).then((result) => {
-      this.setState(result);
-    })
-  }
+      fetch(url, {
+        method: 'GET',
+        headers: reqHeaders,
+      }).then(response => {
+        return response.json();
+      }).then((result) => {
+        this.setState(result);
+      })
+    }
 
-  render() {
-    const {articles} = this.state;
+    render() {
+      const data = this.state[collName];
+      const props = {
+        [collName]: data
+      }
 
-    return (
-      <App articles={articles}/>
-    )
-  }
-}
+      return (
+        <WrappedComponent {...props} {...this.props}/>
+      );
+    }
+  };
+};
+
+const DataFetcher = withFetcher(App, {
+  url: '/api/articles',
+  collName: 'articles'
+})
 
 ReactDOM.render(
   <Router history={history}>
