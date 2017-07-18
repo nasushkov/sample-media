@@ -25,6 +25,10 @@ const App = ({articles}) => {
       <nav>
         <Link
           style={style.nav_link}
+          to="/article"
+        >НОВОСТЬ ЧАСА!</Link>
+        <Link
+          style={style.nav_link}
           to="/"
         >Все</Link>
         <Link
@@ -46,7 +50,7 @@ const App = ({articles}) => {
         <Route exact path="/" render={(props) => (
           <ArticleGrid {...props} articles={articles}/>
         )}/>
-        <Route path="/article/:id" render={(props) => (
+        <Route path="/article/:id?" render={(props) => (
           <Article {...props} articles={articles}/>
         )}/>
       </Switch>

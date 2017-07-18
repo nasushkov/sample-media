@@ -72,7 +72,15 @@ export default ({match, articles}) => {
     )
   }
 
-  const {title, author, text, id} = articles.find(({id}) => id == match.params.id);
+  let article;
+
+  if(match.params.id){
+    article = articles.find(({id}) => id == match.params.id);
+  } else if(articles.length) {
+    article = articles[0];
+  }
+
+  const {title, author, text, id} = article;
 
   const CommentsComponent = withFetcher(Comments, {
     url: `/api/articles/${id}/comments`,
